@@ -62,6 +62,8 @@ class products_spider(Spider):
         for product in products:
             item = WhiskyItem()
 
+            image_src = product.xpath('.//div[@class="article-left article-thumbnail"]/a/img/@data-src').extract_first()
+
             title = product.xpath('.//div[@class="article-title"]/a/text()').extract_first()
 
             attributes = product.xpath('.//div[@class="article-attributes"]//li')
@@ -97,6 +99,7 @@ class products_spider(Spider):
             item["dilivery"] = dilivery
             item["stock"] = stock
             item["company"] = company
+            item["image_src"] = image_src
 
             items.append(item)
 

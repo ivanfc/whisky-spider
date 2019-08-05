@@ -20,3 +20,4 @@ class WhiskyItem(scrapy.Item):
     dilivery = scrapy.Field()
     stock = scrapy.Field()
     company = scrapy.Field()
+    image_src = scrapy.Field()
