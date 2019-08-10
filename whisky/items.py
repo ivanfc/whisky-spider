@@ -11,6 +11,7 @@ import scrapy
 class WhiskyItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
+    url = scrapy.Field()
     title = scrapy.Field()
     attributes = scrapy.Field()
     description = scrapy.Field()

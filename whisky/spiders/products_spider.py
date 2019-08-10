@@ -52,6 +52,15 @@ class products_spider(Spider):
 
         return urls
 
+    def filter_only_number(self, text):
+        if (text == None):
+            return ''
+        new_text = ''
+        for i in text:
+            if (i in "1234567890.,"):
+                new_text += i
+        return new_text
+
 
     def parse_products(self, reponse):
         # extracting all products from page
@@ -63,6 +72,8 @@ class products_spider(Spider):
             item = WhiskyItem()
 
             image_src = product.xpath('.//div[@class="article-left article-thumbnail"]/a/img/@data-src').extract_first()
+
+            url = product.xpath('.//div[@class="article-left article-thumbnail"]/a/@href').extract_first()
 
             title = product.xpath('.//div[@class="article-title"]/a/text()').extract_first()
 
@@ -77,8 +88,8 @@ class products_spider(Spider):
             alcohol = product.xpath('.//div[@class="article-amount"]/span[2]/text()').extract_first()
 
             price = product.xpath('.//span[@class="article-price-default article-club-hidden"]/text()').extract_first()
-            if (price != None):
-                price = price.rstrip().strip()
+            price = self.filter_only_number(price)
+
 
             dilivery = product.xpath('.//div[@class="article-delivery-info"]/span/text()').extract_first()
 
@@ -100,6 +111,7 @@ class products_spider(Spider):
             item["stock"] = stock
             item["company"] = company
             item["image_src"] = image_src
+            item['url'] = url
 
             items.append(item)
 
